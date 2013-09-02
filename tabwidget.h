@@ -13,15 +13,20 @@ class TabWidget : public QWidget
 public:
     explicit TabWidget(QWidget *parent, int numOfTabs);
     ~TabWidget();
+    TabButtonWidget* activeButton() const;
 
 signals:
 
 public slots:
 
+protected:
+    virtual void resizeEvent(QResizeEvent *);
+
 private:
     QList<TabButtonWidget*> m_tabButtons;
     QVBoxLayout *m_tabLayout;
     QHBoxLayout *m_buttonLayout;
+    TabButtonWidget *m_activeButton;
 
 };
 
