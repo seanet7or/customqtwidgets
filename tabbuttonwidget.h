@@ -13,12 +13,15 @@ class TabButtonWidget : public QPushButton
 public:
     explicit TabButtonWidget(TabWidget *parent);
 
-protected:
-    virtual void paintEvent(QPaintEvent *);
-
 signals:
 
 public slots:
+
+protected:
+    virtual void paintEvent(QPaintEvent *);
+
+private slots:
+    void onClicked();
 
 private:
     virtual QSize sizeHint();

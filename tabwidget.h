@@ -14,6 +14,7 @@ public:
     explicit TabWidget(QWidget *parent, int numOfTabs);
     ~TabWidget();
     TabButtonWidget* activeButton() const;
+    void setActiveButton(TabButtonWidget *bn);
 
 signals:
 

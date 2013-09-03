@@ -12,6 +12,7 @@ TabButtonWidget::TabButtonWidget(TabWidget *parent) :
 {
     sizeHint();
     this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+    connect(this, SIGNAL(clicked()), this, SLOT(onClicked()));
 }
 
 
@@ -47,4 +48,12 @@ void TabButtonWidget::paintEvent(QPaintEvent *e)
     painter.drawText(rect(),
                      Qt::AlignCenter | Qt::TextWordWrap,
                      text());
+}
+
+
+void TabButtonWidget::onClicked()
+{
+    if (m_tabWidget->activeButton() != this) {
+        m_tabWidget->setActiveButton(this);
+    }
 }

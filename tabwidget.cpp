@@ -23,6 +23,7 @@ TabWidget::TabWidget(QWidget *parent, int numOfTabs) :
         }
         button->setText(QString(tr("Tab %1")).arg(QString::number(i)));
         m_buttonLayout->addWidget(button);
+        m_tabButtons << button;
     }
     //qDebug() << width() << height();
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -47,4 +48,17 @@ void TabWidget::resizeEvent(QResizeEvent *e)
 TabButtonWidget *TabWidget::activeButton() const
 {
     return m_activeButton;
+}
+
+
+void TabWidget::setActiveButton(TabButtonWidget *bn)
+{
+    if (bn != activeButton()) {
+        if (m_tabButtons.contains(bn)) {
+            TabButtonWidget *prev = activeButton();
+            m_activeButton = bn;
+            prev->update();
+            bn->update();
+        }
+    }
 }
