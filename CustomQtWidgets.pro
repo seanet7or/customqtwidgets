@@ -11,7 +11,8 @@ SOURCES += ../CustomQtWidgets/widgetscrollarea.cpp \
 	../CustomQtWidgets/dialog.cpp \
 	../CustomQtWidgets/pushbutton.cpp \
     tabwidget.cpp \
-    tabbuttonwidget.cpp
+    tabbuttonwidget.cpp \
+    widgettools.cpp
 
 HEADERS  += ../CustomQtWidgets/widgetscrollarea.h \
 	../CustomQtWidgets/widgets.h \
@@ -22,4 +23,5 @@ HEADERS  += ../CustomQtWidgets/widgetscrollarea.h \
 	../CustomQtWidgets/dialog.h \
 	../CustomQtWidgets/pushbutton.h \
     tabwidget.h \
-    tabbuttonwidget.h
+    tabbuttonwidget.h \
+    widgettools.h
