@@ -6,6 +6,9 @@
 #define LIST_RIGHTMARGIN        0
 #define LIST_BOTTOMTOPMARGIN    0
 
+// Margin values for TabButton
+#define TABBUTTON_ICONTOPMARGIN     3
+
 // Color for mouse over hover
 #define MOUSEOVERCOLOR          118, 197, 242, 80
 

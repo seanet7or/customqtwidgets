@@ -8,6 +8,9 @@ class WidgetTools
 {
 public:
     WidgetTools();
+#ifdef Q_OS_ANDROID
+    static QPixmap loadDensityPixmap(const QString &resName);
+#endif
 
 private:
 #ifdef Q_OS_ANDROID

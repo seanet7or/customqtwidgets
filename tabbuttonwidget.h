@@ -1,6 +1,6 @@
 #ifndef TABBUTTONWIDGET_H
 #define TABBUTTONWIDGET_H
-
+#include <QPixmap>
 #include <QWidget>
 #include <QPushButton>
 
@@ -12,6 +12,8 @@ class TabButtonWidget : public QPushButton
     Q_OBJECT
 public:
     explicit TabButtonWidget(TabWidget *parent);
+    void setPixmap(QPixmap p);
+    void setText(const QString &text);
 
 signals:
 
@@ -22,11 +24,13 @@ protected:
 
 private slots:
     void onClicked();
+    void recalcSize();
 
 private:
     virtual QSize sizeHint();
 
 private:
+    QPixmap m_pixmap;
     QSize m_minSize;
     TabWidget *m_tabWidget;
 };

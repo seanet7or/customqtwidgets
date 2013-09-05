@@ -38,5 +38,11 @@ const QString &WidgetTools::screenGeneralizedDensity()
     return density;
 }
 
-#endif
 
+QPixmap WidgetTools::loadDensityPixmap(const QString &resName)
+{
+    QString fullName = QString(":/") +  screenGeneralizedDensity() + QString("-") + resName;
+    qDebug() << "Loading " << fullName;
+    return QPixmap(fullName);
+}
+#endif
