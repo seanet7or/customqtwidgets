@@ -10,6 +10,8 @@ public:
     WidgetTools();
 #ifdef Q_OS_ANDROID
     static QPixmap loadDensityPixmap(const QString &resName);
+#else
+    static QPixmap loadDensityPixmap(const QString &resName) { return QPixmap("mdpi-" + resName); }
 #endif
 
 private:

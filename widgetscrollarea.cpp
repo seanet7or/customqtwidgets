@@ -11,7 +11,10 @@ WidgetScrollArea::WidgetScrollArea(QWidget *parent) :
     m_centralWidget = new QWidget(this);
     QVBoxLayout *centralLayout = new QVBoxLayout(m_centralWidget);
     m_centralWidget->setLayout(centralLayout);
-    centralLayout->setContentsMargins(LIST_LEFTMARGIN, LIST_BOTTOMTOPMARGIN, LIST_RIGHTMARGIN, LIST_BOTTOMTOPMARGIN);
+    centralLayout->setContentsMargins(UI_LIST_LEFTMARGIN,
+                                      UI_LIST_BOTTOMTOPMARGIN,
+                                      UI_LIST_RIGHTMARGIN,
+                                      UI_LIST_BOTTOMTOPMARGIN);
     centralLayout->setSpacing(0);
     centralLayout->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
     m_centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

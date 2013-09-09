@@ -3,11 +3,12 @@
 #include <QPixmap>
 #include <QWidget>
 #include <QPushButton>
+#include "pushbutton.h"
 
 class TabWidget;
 
 
-class TabButtonWidget : public QPushButton
+class TabButtonWidget : public PushButton
 {
     Q_OBJECT
 public:

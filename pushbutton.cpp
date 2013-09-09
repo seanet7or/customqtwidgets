@@ -57,3 +57,9 @@ void PushButton::setText(const QString &text)
     QPushButton::setText(text);
     RecalcSize();
 }
+
+
+void PushButton::update()
+{
+    QPushButton::update();
+}

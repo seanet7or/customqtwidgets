@@ -3,10 +3,11 @@
 #include <QDebug>
 #include "tabwidget.h"
 #include "widgets.h"
+#include "pushbutton.h"
 
 
 TabButtonWidget::TabButtonWidget(TabWidget *parent) :
-    QPushButton(parent),
+    PushButton(parent),
     m_minSize(size()),
     m_tabWidget(parent)
 {
@@ -26,27 +27,32 @@ void TabButtonWidget::paintEvent(QPaintEvent *e)
 {
     QPainter painter(this);
     if (m_tabWidget->activeButton() == this) {
-        painter.fillRect(rect(), QColor(TABACTIVEBNCOLOR));
-        painter.fillRect(rect().x(), rect().y(), 1, rect().height(), QColor(TABBORDERCOLOR1));
-        painter.fillRect(rect().x() + 1, rect().y() + 1, 2, rect().height() - 1, QColor(TABBORDERCOLOR2));
-        painter.fillRect(rect().right(), rect().y(), 1, rect().height(), QColor(TABBORDERCOLOR1));
-        painter.fillRect(rect().right() - 2, rect().y() + 1, 2, rect().height() - 1, QColor(TABBORDERCOLOR2));
-        painter.fillRect(rect().x(), (rect().y()), rect().width(), 1, QColor(TABBORDERCOLOR1));
-        painter.fillRect(rect().x() + 1, (rect().y() + 1), rect().width() - 2, 2, QColor(TABBORDERCOLOR2));
+        painter.fillRect(rect(), QColor(UI_TABACTIVEBNCOLOR));
+        painter.fillRect(rect().x(), rect().y(), 1, rect().height(), QColor(UI_TABBORDERCOLOR1));
+        painter.fillRect(rect().x() + 1, rect().y() + 1, 2, rect().height() - 1, QColor(UI_TABBORDERCOLOR2));
+        painter.fillRect(rect().right(), rect().y(), 1, rect().height(), QColor(UI_TABBORDERCOLOR1));
+        painter.fillRect(rect().right() - 2, rect().y() + 1, 2, rect().height() - 1, QColor(UI_TABBORDERCOLOR2));
+        painter.fillRect(rect().x(), (rect().y()), rect().width(), 1, QColor(UI_TABBORDERCOLOR1));
+        painter.fillRect(rect().x() + 1, (rect().y() + 1), rect().width() - 2, 2, QColor(UI_TABBORDERCOLOR2));
     } else {
-        painter.fillRect(rect(), QColor(TABINACTIVEBNCOLOR));
-        painter.fillRect(rect().x(), (rect().bottom()), rect().width(), 1, QColor(TABBORDERCOLOR1));
-        painter.fillRect(rect().x(), (rect().bottom() - 2), rect().width(), 2, QColor(TABBORDERCOLOR2));
+        painter.fillRect(rect(), QColor(UI_TABINACTIVEBNCOLOR));
+        painter.fillRect(rect().x(), (rect().bottom()), rect().width(), 1, QColor(UI_TABBORDERCOLOR1));
+        painter.fillRect(rect().x(), (rect().bottom() - 2), rect().width(), 2, QColor(UI_TABBORDERCOLOR2));
     }
+    DrawMouseHoverRect(painter);
     int textYPos = 0;
     if (!m_pixmap.isNull()) {
         int xOff = ((rect().width() - m_pixmap.width()) / 2);
-        painter.drawPixmap(rect().x() + xOff, rect().y() + TABBUTTON_ICONTOPMARGIN,
+        painter.drawPixmap(rect().x() + xOff, rect().y() + UI_TABBUTTON_ICONTOPMARGIN,
                            m_pixmap.width(), m_pixmap.height(), m_pixmap);
-        textYPos += m_pixmap.height() + TABBUTTON_ICONTOPMARGIN;
+        textYPos += m_pixmap.height() + UI_TABBUTTON_ICONTOPMARGIN;
     }
     // Text
-    painter.setPen(QColor(TABTEXTCOLOR));
+    if (m_tabWidget->activeButton() == this) {
+        painter.setPen(QColor(UI_TABACTIVETEXTCOLOR));
+    } else {
+        painter.setPen(QColor(UI_TABINACTIVETEXTCOLOR));
+    }
     painter.setFont(font());
     painter.drawText(rect().x(),
                      rect().y() + textYPos,
@@ -87,7 +93,7 @@ void TabButtonWidget::recalcSize()
     if (!(m_pixmap.isNull()))
     {
         m_minSize.setWidth(std::max(m_minSize.width(), m_pixmap.width()));
-        m_minSize.setHeight(m_minSize.height() + TABBUTTON_ICONTOPMARGIN + m_pixmap.height());
+        m_minSize.setHeight(m_minSize.height() + UI_TABBUTTON_ICONTOPMARGIN + m_pixmap.height());
     }
     setMinimumSize(m_minSize);
 }

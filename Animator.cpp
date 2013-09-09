@@ -55,7 +55,7 @@ void Animator::UpdateNextFrame(QWidget *w)
     Animator *inst = Animator::Instance();
     if (!inst->m_frameTimer->isActive())
     {
-        inst->m_frameTimer->start(FRAMETIME);
+        inst->m_frameTimer->start(UI_FRAMETIME);
     }
     inst->m_dirtyWidgets.insert(w);
 }

@@ -1,5 +1,7 @@
 #include "tabwidget.h"
 #include <QDebug>
+#include "pushbutton.h"
+#include "tabbuttonwidget.h"
 
 
 TabWidget::TabWidget(QWidget *parent, int numOfTabs) :
@@ -22,7 +24,7 @@ TabWidget::TabWidget(QWidget *parent, int numOfTabs) :
             m_activeButton = button;
         }
         button->setText(QString(tr("Tab %1")).arg(QString::number(i)));
-        m_buttonLayout->addWidget(button);
+        m_buttonLayout->addWidget(button->Widget());
         m_tabButtons << button;
     }
     //qDebug() << width() << height();
@@ -45,7 +47,7 @@ void TabWidget::resizeEvent(QResizeEvent *e)
 }
 
 
-TabButtonWidget *TabWidget::activeButton() const
+TabButtonWidget *TabWidget::activeButton()
 {
     return m_activeButton;
 }
@@ -61,4 +63,16 @@ void TabWidget::setActiveButton(TabButtonWidget *bn)
             bn->update();
         }
     }
+}
+
+
+TabButtonWidget *TabWidget::getButton(int index)
+{
+    return m_tabButtons.at(index);
+}
+
+
+int TabWidget::numOfTabs() const
+{
+    return m_tabButtons.size();
 }

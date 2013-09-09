@@ -5,7 +5,7 @@
 #include "delegates/mousehovercomposite.h"
 
 
-class PushButton : protected QPushButton, private MouseHoverComposite
+class PushButton : public QPushButton, protected MouseHoverComposite
 {
     Q_OBJECT
 public:
@@ -16,9 +16,11 @@ public:
     virtual QSize sizeHint() const { return m_size; }
     virtual void setText(const QString &text);
     QWidget *Widget() { return this; }
-signals:
 
 public slots:
+    void update();
+signals:
+
 
 protected:
     virtual void paintEvent(QPaintEvent *);

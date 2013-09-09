@@ -13,8 +13,10 @@ class TabWidget : public QWidget
 public:
     explicit TabWidget(QWidget *parent, int numOfTabs);
     ~TabWidget();
-    TabButtonWidget* activeButton() const;
+    TabButtonWidget* activeButton();
     void setActiveButton(TabButtonWidget *bn);
+    TabButtonWidget *getButton(int index);
+    int numOfTabs() const;
 
 signals:
 

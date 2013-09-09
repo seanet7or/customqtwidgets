@@ -30,6 +30,7 @@ private:
     QTime m_lastMouseEvent;
     QTimer *m_animTimer;
     QWidget *m_composite;
+    bool m_hovered;
 };
 
 #endif // MOUSEHOVERABLE_H
