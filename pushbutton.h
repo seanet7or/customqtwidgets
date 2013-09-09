@@ -10,6 +10,7 @@ class PushButton : public QPushButton, protected MouseHoverComposite
     Q_OBJECT
 public:
     PushButton(QWidget *parent = 0);
+    virtual void setPixmap(QPixmap p);
     virtual void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
     virtual const QFont &font() const;
     virtual void setFont(const QFont &);
@@ -18,7 +19,6 @@ public:
     QWidget *Widget() { return this; }
 
 public slots:
-    void update();
 signals:
 
 
@@ -31,7 +31,9 @@ private:
 
 private:
     QSize m_size;
-
+    QPixmap m_icon;
+    QSize m_textSize;
+    QSize m_iconSize;
 };
 
 #endif // PUSHBUTTON_H
