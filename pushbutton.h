@@ -2,6 +2,7 @@
 #define PUSHBUTTON_H
 #include <QWidget>
 #include <QPushButton>
+#include <QtSvg/QSvgRenderer>
 #include "delegates/mousehovercomposite.h"
 
 
@@ -10,6 +11,7 @@ class PushButton : public QPushButton, protected MouseHoverComposite
     Q_OBJECT
 public:
     PushButton(QWidget *parent = 0);
+    virtual void setSVG(const QString &name);
     virtual void setPixmap(QPixmap p);
     virtual void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
     virtual const QFont &font() const;
@@ -34,6 +36,7 @@ private:
     QPixmap m_icon;
     QSize m_textSize;
     QSize m_iconSize;
+    QSvgRenderer m_svgRenderer;
 };
 
 #endif // PUSHBUTTON_H
