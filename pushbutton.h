@@ -16,7 +16,7 @@ public:
     virtual void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
     virtual const QFont &font() const;
     virtual void setFont(const QFont &);
-    virtual QSize sizeHint() const { return m_size; }
+    virtual QSize sizeHint();
     virtual void setText(const QString &text);
     QWidget *Widget() { return this; }
 
@@ -26,16 +26,16 @@ signals:
 
 protected:
     virtual void paintEvent(QPaintEvent *);
+    virtual void resizeEvent(QResizeEvent *);
 
 private:
     Q_DISABLE_COPY(PushButton)
     void RecalcSize();
 
 private:
-    QSize m_size;
     QPixmap m_icon;
     QSize m_textSize;
-    QSize m_iconSize;
+    QSize m_size;
     QSvgRenderer m_svgRenderer;
 };
 

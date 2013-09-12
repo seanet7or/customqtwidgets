@@ -2,15 +2,16 @@
 #include "delegates/mousehoverable.h"
 #include <QWidget>
 #include <QDebug>
+#include "widgetsettings.h"
 
 
 PushButton::PushButton(QWidget *parent) :
     QPushButton(parent),
     MouseHoverComposite(new MouseHoverable(this)),
-    m_icon(),
-    m_iconSize(128, 128)
+    m_icon()
 {
-    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setFont(WidgetSettings::buttonFont());
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 }
 
 
@@ -28,40 +29,80 @@ void PushButton::paintEvent(QPaintEvent *e)
     int paintHeight = rect().height();
     if (!(m_icon.isNull()) || (m_svgRenderer.isValid()))
     {
-        iconHeight = ((qreal)paintHeight) * (((qreal)m_iconSize.height()) / ((qreal)m_size.height()));
-        textHeight = ((qreal)paintHeight) * (((qreal)m_textSize.height()) / ((qreal)m_size.height()));
-        if (textHeight > m_textSize.height() * 2)
+        if (true) //(m_textSize.width() <= (rect().width() / 2))
         {
-            textHeight = m_textSize.height() * 2;
-            iconHeight = paintHeight - textHeight;
-        }
-
-        //yOff = std::min(iconHeight / 6, yOff);
-        int length = std::min(iconHeight, rect().width());
-        int xOff = (rect().width() - length) / 2;
-        int yOff = (iconHeight - length) / 2;
-        QRect target(xOff, yOff + textHeight,length, length);
-        if (m_svgRenderer.isValid())
-        {
-            m_svgRenderer.render(&painter, target);
-        }
-        else if (!m_icon.isNull())
-        {
-            if (length > m_icon.width())
+            int length = rect().height();
+            if (length > (rect().width() - m_textSize.width()))
             {
-                length = m_icon.width();
-                xOff = (rect().width() - length) / 2;
-                yOff = (iconHeight - length) / 2;
-                target.setRect(xOff, yOff + textHeight, length, length);
+                length = rect().width() - m_textSize.width();
             }
-            painter.drawPixmap(target,
-                               m_icon,
-                               m_icon.rect());
+            if (length > m_textSize.height() * 1.5)
+                length = m_textSize.height() * 1.5;
+            int freeXSpace = rect().width() - m_textSize.width() - length;
+            QRect target((freeXSpace * 3) / 8,
+                         (rect().height() - length) / 2,
+                         length,
+                         length);
+            if (m_svgRenderer.isValid())
+            {
+                m_svgRenderer.render(&painter, target);
+            }
+            else if (!m_icon.isNull())
+            {
+                painter.drawPixmap(target,
+                                   m_icon,
+                                   m_icon.rect());
+            }
+            painter.setFont(font());
+            painter.drawText(target.x() + length + (freeXSpace * 2) / 8,
+                             0,
+                             m_textSize.width(),
+                             rect().height(),
+                             Qt::AlignCenter | Qt::TextWordWrap,
+                             text());
         }
-        painter.setFont(font());
-        painter.drawText(0, 0, rect().width(), textHeight,
-                         Qt::AlignCenter | Qt::TextWordWrap,
-                         text());
+        else
+        {
+            QSize iconSize(WidgetSettings::iconSize());
+            iconHeight = ((qreal)paintHeight) * (((qreal)iconSize.height()) / ((qreal)m_size.height()));
+            textHeight = ((qreal)paintHeight) * (((qreal)m_textSize.height()) / ((qreal)m_size.height()));
+            if (textHeight > m_textSize.height() * 2)
+            {
+                textHeight = m_textSize.height() * 2;
+                iconHeight = paintHeight - textHeight;
+            }
+
+            //yOff = std::min(iconHeight / 6, yOff);
+            int length = std::min(iconHeight, rect().width());
+            int xOff = (rect().width() - length) / 2;
+            int yOff = (iconHeight - length) / 2;
+            QRect target(xOff, yOff + textHeight,length, length);
+            if (m_svgRenderer.isValid())
+            {
+                m_svgRenderer.render(&painter, target);
+            }
+            else if (!m_icon.isNull())
+            {
+                if (length > m_icon.width())
+                {
+                    length = m_icon.width();
+                    xOff = (rect().width() - length) / 2;
+                    yOff = (iconHeight - length) / 2;
+                    target.setRect(xOff, yOff + textHeight, length, length);
+                }
+                painter.drawPixmap(target,
+                                   m_icon,
+                                   m_icon.rect());
+            }
+            painter.setFont(font());
+            painter.drawText(0, 0, rect().width(), textHeight,
+                             Qt::AlignCenter | Qt::TextWordWrap,
+                             text());
+        }
+    }
+    else
+    {
+
     }
 }
 
@@ -86,12 +127,11 @@ void PushButton::RecalcSize()
     {
         textRect = this->fontMetrics().boundingRect(0, 0, QWIDGETSIZE_MAX, QWIDGETSIZE_MAX,
                                                       Qt::AlignCenter, text());
-        textRect.setWidth(textRect.width() + fontMetrics().averageCharWidth() * 4);
+        textRect.setWidth(textRect.width() + fontMetrics().averageCharWidth() * 2);
         textRect.setHeight(textRect.height() + fontMetrics().lineSpacing());
         m_textSize = textRect.size();
     }
-    m_size = QSize(std::max(m_iconSize.width(), textRect.width()), m_iconSize.height() + textRect.height());
-
+    m_size = QSize(textRect.width() + textRect.height(), textRect.height());
     setMinimumSize(m_size);
 }
 
@@ -101,6 +141,11 @@ void PushButton::setFont(const QFont &f)
     QPushButton::setFont(f);
     RecalcSize();
     update();
+}
+
+QSize PushButton::sizeHint()
+{
+    return WidgetSettings::iconSize();
 }
 
 
@@ -133,4 +178,10 @@ void PushButton::setSVG(const QString &name)
     {
         qDebug() << "ERROR: Could not load svg " << name;
     }
+}
+
+
+void PushButton::resizeEvent(QResizeEvent *)
+{
+    RecalcSize();
 }

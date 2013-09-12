@@ -9,7 +9,7 @@ class WidgetScrollArea : public QScrollArea
 {
     Q_OBJECT
 public:
-    explicit WidgetScrollArea(QWidget *parent = 0);
+    explicit WidgetScrollArea(const QString &caption, const QString hint, QWidget *parent = 0);
     virtual void append(QWidget *w);
 signals:
     
@@ -17,6 +17,7 @@ public slots:
 
 private:
     QLabel *m_heading;
+    QLabel *m_helpLabel;
     QWidget *m_centralWidget;
     
 };
