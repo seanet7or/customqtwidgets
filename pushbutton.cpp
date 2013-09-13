@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QDebug>
 #include "widgetsettings.h"
+#include "widgets.h"
 
 
 PushButton::PushButton(QWidget *parent) :
@@ -23,87 +24,38 @@ void PushButton::paintEvent(QPaintEvent *e)
                            | QPainter::SmoothPixmapTransform,
                            true);
     DrawMouseHoverRect(painter);
+    painter.setPen(QPen(QColor(132, 132, 132)));
+    int xMargin = WidgetSettings::pushButtonLeftRightMargins();
+    int yMargin = WidgetSettings::pushButtonTopBottomMargins();
+    painter.drawRect(rect().x() + xMargin,
+                     rect().y() + yMargin,
+                     rect().width() - xMargin * 2,
+                     rect().height() - yMargin * 2);
+    int yIconMargin = WidgetSettings::pushButtonIconTopBottomMargins();
+    int xIconMargin = WidgetSettings::pushButtonIconLeftRightMargins();
+    int yTextMargin = WidgetSettings::pushButtonTextTopBottomMargins();
+    int xTextMargin = WidgetSettings::pushButtonTextLeftRightMargins();
 
-    int iconHeight = 0;
-    int textHeight = 0;
-    int paintHeight = rect().height();
-    if (!(m_icon.isNull()) || (m_svgRenderer.isValid()))
+    int freeXSpace = rect().width() - m_textSize.width() - m_iconSize.width()
+            - 2 * xMargin - 2 * xIconMargin - 2 * xTextMargin;
+    QRect target(xMargin + xIconMargin + (freeXSpace * 3) / 8,
+                 yMargin + yIconMargin,
+                 m_iconSize.width(),
+                 m_iconSize.height());
+    if (m_svgRenderer.isValid())
     {
-        if (true) //(m_textSize.width() <= (rect().width() / 2))
-        {
-            int length = rect().height();
-            if (length > (rect().width() - m_textSize.width()))
-            {
-                length = rect().width() - m_textSize.width();
-            }
-            if (length > m_textSize.height() * 1.5)
-                length = m_textSize.height() * 1.5;
-            int freeXSpace = rect().width() - m_textSize.width() - length;
-            QRect target((freeXSpace * 3) / 8,
-                         (rect().height() - length) / 2,
-                         length,
-                         length);
-            if (m_svgRenderer.isValid())
-            {
-                m_svgRenderer.render(&painter, target);
-            }
-            else if (!m_icon.isNull())
-            {
-                painter.drawPixmap(target,
-                                   m_icon,
-                                   m_icon.rect());
-            }
-            painter.setFont(font());
-            painter.drawText(target.x() + length + (freeXSpace * 2) / 8,
-                             0,
-                             m_textSize.width(),
-                             rect().height(),
-                             Qt::AlignCenter | Qt::TextWordWrap,
-                             text());
-        }
-        else
-        {
-            QSize iconSize(WidgetSettings::iconSize());
-            iconHeight = ((qreal)paintHeight) * (((qreal)iconSize.height()) / ((qreal)m_size.height()));
-            textHeight = ((qreal)paintHeight) * (((qreal)m_textSize.height()) / ((qreal)m_size.height()));
-            if (textHeight > m_textSize.height() * 2)
-            {
-                textHeight = m_textSize.height() * 2;
-                iconHeight = paintHeight - textHeight;
-            }
-
-            //yOff = std::min(iconHeight / 6, yOff);
-            int length = std::min(iconHeight, rect().width());
-            int xOff = (rect().width() - length) / 2;
-            int yOff = (iconHeight - length) / 2;
-            QRect target(xOff, yOff + textHeight,length, length);
-            if (m_svgRenderer.isValid())
-            {
-                m_svgRenderer.render(&painter, target);
-            }
-            else if (!m_icon.isNull())
-            {
-                if (length > m_icon.width())
-                {
-                    length = m_icon.width();
-                    xOff = (rect().width() - length) / 2;
-                    yOff = (iconHeight - length) / 2;
-                    target.setRect(xOff, yOff + textHeight, length, length);
-                }
-                painter.drawPixmap(target,
-                                   m_icon,
-                                   m_icon.rect());
-            }
-            painter.setFont(font());
-            painter.drawText(0, 0, rect().width(), textHeight,
-                             Qt::AlignCenter | Qt::TextWordWrap,
-                             text());
-        }
+        m_svgRenderer.render(&painter, target);
     }
-    else
-    {
+    painter.setFont(font());
+    painter.setPen(QPen(QColor(0, 0, 0)));
 
-    }
+    painter.drawText(target.x() + xIconMargin + m_iconSize.width()
+                     + (freeXSpace * 2) / 8 + xTextMargin,
+                     yMargin + yTextMargin,
+                     m_textSize.width(),
+                     m_textSize.height(),
+                     Qt::AlignCenter | Qt::TextWordWrap,
+                     text());
 }
 
 
@@ -128,11 +80,22 @@ void PushButton::RecalcSize()
         textRect = this->fontMetrics().boundingRect(0, 0, QWIDGETSIZE_MAX, QWIDGETSIZE_MAX,
                                                       Qt::AlignCenter, text());
         textRect.setWidth(textRect.width() + fontMetrics().averageCharWidth() * 2);
-        textRect.setHeight(textRect.height() + fontMetrics().lineSpacing());
+        textRect.setHeight(fontMetrics().lineSpacing());
         m_textSize = textRect.size();
     }
-    m_size = QSize(textRect.width() + textRect.height(), textRect.height());
+    int iconLength = m_textSize.height()
+            + 2 * WidgetSettings::pushButtonTextTopBottomMargins()
+            - 2 * WidgetSettings::pushButtonIconTopBottomMargins();
+    m_iconSize = QSize(iconLength, iconLength);
+    m_size = QSize(m_textSize.width() + 2 * WidgetSettings::pushButtonTextLeftRightMargins()
+                   + m_iconSize.width() + 2 * WidgetSettings::pushButtonIconLeftRightMargins()
+                   + 2 * WidgetSettings::pushButtonLeftRightMargins(),
+                   textRect.height()
+                   + WidgetSettings::pushButtonTextTopBottomMargins() * 2
+                   + WidgetSettings::pushButtonTopBottomMargins() * 2);
     setMinimumSize(m_size);
+    QSize maxSize(m_size.width() * 0.8, m_size.height() * 0.8);
+    setMaximumSize(maxSize);
 }
 
 
@@ -143,11 +106,17 @@ void PushButton::setFont(const QFont &f)
     update();
 }
 
-QSize PushButton::sizeHint()
+
+QSize PushButton::sizeHint() const
 {
-    return WidgetSettings::iconSize();
+    return m_size;
 }
 
+
+QSize PushButton::minimumSizeHint() const
+{
+    return m_size;
+}
 
 void PushButton::setText(const QString &text)
 {
@@ -185,3 +154,4 @@ void PushButton::resizeEvent(QResizeEvent *)
 {
     RecalcSize();
 }
+

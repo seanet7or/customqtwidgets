@@ -4,6 +4,7 @@
 #include "tabwidget.h"
 #include "widgets.h"
 #include "pushbutton.h"
+#include "widgetsettings.h"
 
 
 TabButtonWidget::TabButtonWidget(TabWidget *parent) :

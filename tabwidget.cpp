@@ -10,6 +10,8 @@ TabWidget::TabWidget(QWidget *parent, int numOfTabs) :
     m_buttonLayout(new QHBoxLayout()),
     m_activeButton(NULL)
 {
+    m_tabLayout->setObjectName("TabWidget::tabLayout");
+    m_buttonLayout->setObjectName("TabWidget::buttonLayout");
     m_tabLayout->addLayout(m_buttonLayout);
     this->setLayout(m_tabLayout);
     layout()->setContentsMargins(0, 0, 0, 0);

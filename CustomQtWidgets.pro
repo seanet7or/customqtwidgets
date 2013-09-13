@@ -13,7 +13,7 @@ SOURCES += widgetscrollarea.cpp \
     tabwidget.cpp \
     tabbuttonwidget.cpp \
     widgettools.cpp \
-    ../CustomQtWidgets/widgetsettings.cpp
+	widgetsettings.cpp
 
 HEADERS  += ../CustomQtWidgets/widgetscrollarea.h \
 	../CustomQtWidgets/widgets.h \

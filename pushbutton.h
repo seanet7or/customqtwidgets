@@ -16,11 +16,13 @@ public:
     virtual void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
     virtual const QFont &font() const;
     virtual void setFont(const QFont &);
-    virtual QSize sizeHint();
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
     virtual void setText(const QString &text);
     QWidget *Widget() { return this; }
 
 public slots:
+
 signals:
 
 
@@ -35,6 +37,7 @@ private:
 private:
     QPixmap m_icon;
     QSize m_textSize;
+    QSize m_iconSize;
     QSize m_size;
     QSvgRenderer m_svgRenderer;
 };

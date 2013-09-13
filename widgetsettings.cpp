@@ -14,7 +14,7 @@ const QFont &WidgetSettings::helpTextFont()
     if (!init)
     {
         init = true;
-        font.setPointSize(12);
+        font.setPointSize(11);
         font.setWeight(QFont::DemiBold);
         font.setStyle(QFont::StyleOblique);
     }
@@ -29,7 +29,7 @@ const QFont &WidgetSettings::heading3Font()
     if (!init)
     {
         init = true;
-        font.setPointSize(14);
+        font.setPointSize(15);
         font.setStyle(QFont::StyleNormal);
         font.setCapitalization(QFont::Capitalize);
     }
@@ -50,7 +50,7 @@ const QFont &WidgetSettings::buttonFont()
     if (!init)
     {
         init = true;
-        font.setPointSize(16);
+        font.setPointSize(11);
         font.setWeight(QFont::Bold);
         font.setStyle(QFont::StyleNormal);
         font.setCapitalization(QFont::AllUppercase);
@@ -63,8 +63,55 @@ QLabel *WidgetSettings::newHelpLabel()
 {
     QLabel *label = new QLabel;
     label->setFont(helpTextFont());
-    label->setContentsMargins(12, 12, 12, 12);
+    label->setContentsMargins(8, 6, 8, 6);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignCenter);
     return label;
+}
+
+
+int WidgetSettings::pushButtonLeftRightMargins()
+{
+    return 4;
+}
+
+
+int WidgetSettings::pushButtonTopBottomMargins()
+{
+    return 3;
+}
+
+
+int WidgetSettings::pushButtonIconLeftRightMargins()
+{
+    return 2;
+}
+
+
+int WidgetSettings::pushButtonIconTopBottomMargins()
+{
+    return 2;
+}
+
+
+int WidgetSettings::pushButtonTextLeftRightMargins()
+{
+    return 8;
+}
+
+
+int WidgetSettings::pushButtonTextTopBottomMargins()
+{
+    return 6;
+}
+
+
+QLabel *WidgetSettings::newHeading3Label()
+{
+    QLabel *h3 = new QLabel();
+    h3->setFont(heading3Font());
+    h3->setContentsMargins(8, 8, 16, 8);
+    h3->setAlignment(Qt::AlignHCenter);
+    h3->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    return h3;
 }
