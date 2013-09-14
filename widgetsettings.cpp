@@ -115,3 +115,15 @@ QLabel *WidgetSettings::newHeading3Label()
     h3->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     return h3;
 }
+
+
+int WidgetSettings::iconButtonTopLeftMargins()
+{
+    return iconButtonLeftRightMargins();
+}
+
+
+int WidgetSettings::iconButtonLeftRightMargins()
+{
+    return 2;
+}

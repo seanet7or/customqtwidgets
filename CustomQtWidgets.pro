@@ -13,7 +13,9 @@ SOURCES += widgetscrollarea.cpp \
     tabwidget.cpp \
     tabbuttonwidget.cpp \
     widgettools.cpp \
-	widgetsettings.cpp
+	widgetsettings.cpp \
+    ../CustomQtWidgets/delegates/fadableitem.cpp \
+    ../CustomQtWidgets/IconButton.cpp
 
 HEADERS  += ../CustomQtWidgets/widgetscrollarea.h \
 	../CustomQtWidgets/widgets.h \
@@ -26,4 +28,8 @@ HEADERS  += ../CustomQtWidgets/widgetscrollarea.h \
     tabwidget.h \
     tabbuttonwidget.h \
     widgettools.h \
-    ../CustomQtWidgets/widgetsettings.h
+    ../CustomQtWidgets/widgetsettings.h \
+    ../CustomQtWidgets/delegates/fadeitemdelegate.h \
+    ../CustomQtWidgets/delegates/fadableitem.h \
+    ../CustomQtWidgets/delegates/fadableitemcomposite.h \
+    ../CustomQtWidgets/iconbutton.h

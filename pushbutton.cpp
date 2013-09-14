@@ -4,11 +4,13 @@
 #include <QDebug>
 #include "widgetsettings.h"
 #include "widgets.h"
+#include "delegates/fadableitem.h"
 
 
-PushButton::PushButton(QWidget *parent) :
+PushButton::PushButton(QWidget *fader, QWidget *parent) :
     QPushButton(parent),
     MouseHoverComposite(new MouseHoverable(this)),
+    FadableItemComposite(new FadableItem(this, fader)),
     m_icon()
 {
     setFont(WidgetSettings::buttonFont());
@@ -19,11 +21,13 @@ PushButton::PushButton(QWidget *parent) :
 void PushButton::paintEvent(QPaintEvent *e)
 {
     QPainter painter(this);
+
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::TextAntialiasing
                            | QPainter::SmoothPixmapTransform,
                            true);
     DrawMouseHoverRect(painter);
+    FadableItemComposite::DrawAlpha(&painter);
     painter.setPen(QPen(QColor(132, 132, 132)));
     int xMargin = WidgetSettings::pushButtonLeftRightMargins();
     int yMargin = WidgetSettings::pushButtonTopBottomMargins();

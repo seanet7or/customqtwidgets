@@ -35,6 +35,9 @@ public:
     static int pushButtonTextLeftRightMargins();
     static int pushButtonTextTopBottomMargins();
 
+    static int iconButtonTopLeftMargins();
+    static int iconButtonLeftRightMargins();
+
     /**
      * Widgets
      */

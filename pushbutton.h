@@ -4,13 +4,14 @@
 #include <QPushButton>
 #include <QtSvg/QSvgRenderer>
 #include "delegates/mousehovercomposite.h"
+#include "delegates/fadableitemcomposite.h"
 
 
-class PushButton : public QPushButton, protected MouseHoverComposite
+class PushButton : public QPushButton, protected MouseHoverComposite, protected FadableItemComposite
 {
     Q_OBJECT
 public:
-    PushButton(QWidget *parent = 0);
+    PushButton(QWidget *fader, QWidget *parent);
     virtual void setSVG(const QString &name);
     virtual void setPixmap(QPixmap p);
     virtual void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
