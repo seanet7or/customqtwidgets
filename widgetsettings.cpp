@@ -15,7 +15,7 @@ const QFont &WidgetSettings::helpTextFont()
     {
         init = true;
         font.setPointSize(defaultFontSize());
-        font.setWeight(QFont::DemiBold);
+        font.setWeight(QFont::Normal);
         font.setStyle(QFont::StyleOblique);
     }
     return font;
@@ -29,8 +29,9 @@ const QFont &WidgetSettings::heading3Font()
     if (!init)
     {
         init = true;
-        font.setPointSize(defaultFontSize() + 4);
+        font.setPointSize(defaultFontSize() + 3);
         font.setStyle(QFont::StyleNormal);
+        font.setWeight(QFont::DemiBold);
         font.setCapitalization(QFont::Capitalize);
     }
     return font;
@@ -51,7 +52,7 @@ const QFont &WidgetSettings::buttonFont()
     {
         init = true;
         font.setPointSize(defaultFontSize());
-        font.setWeight(QFont::Bold);
+        font.setWeight(QFont::DemiBold);
         font.setStyle(QFont::StyleNormal);
         font.setCapitalization(QFont::AllUppercase);
     }
@@ -119,7 +120,7 @@ QLabel *WidgetSettings::newHeading3Label()
 
 int WidgetSettings::iconButtonMargins()
 {
-    return 2;
+    return 5;
 }
 
 
@@ -154,7 +155,7 @@ const QFont &WidgetSettings::textFont()
     {
         init = true;
         font.setPointSize(defaultFontSize());
-        font.setWeight(QFont::DemiBold);
+        font.setWeight(QFont::Normal);
     }
     return font;
 }
@@ -162,5 +163,5 @@ const QFont &WidgetSettings::textFont()
 
 int WidgetSettings::defaultFontSize()
 {
-    return 10;
+    return 9;
 }
