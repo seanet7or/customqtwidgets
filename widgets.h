@@ -10,7 +10,7 @@
 #define UI_TABBUTTON_ICONTOPMARGIN      3
 
 // Color for mouse over hover
-#define UI_MOUSEOVERCOLOR               118, 197, 242, 255
+#define UI_MOUSEOVERCOLOR               118, 197, 242, 100
 
 #define UI_TABACTIVEBNCOLOR             194, 204, 208
 #define UI_TABINACTIVEBNCOLOR           144, 154, 158
@@ -21,6 +21,6 @@
 // Time of one frame
 #define UI_FRAMETIME                    (1000/60)
 // Mouse hover fading in ms
-#define UI_MOUSEOVERDURATION            150
+#define UI_MOUSEOVERDURATION            200
 
 #endif // WIDGETS_H

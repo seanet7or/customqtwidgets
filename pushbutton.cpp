@@ -1,10 +1,10 @@
-#include "pushbutton.h"
-#include "delegates/mousehoverable.h"
 #include <QWidget>
 #include <QDebug>
 #include "widgetsettings.h"
 #include "widgets.h"
 #include "delegates/fadableitem.h"
+#include "pushbutton.h"
+#include "delegates/mousehoverable.h"
 
 
 PushButton::PushButton(QWidget *fader, QWidget *parent) :

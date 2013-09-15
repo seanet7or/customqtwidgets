@@ -7,6 +7,7 @@ class FadableItemComposite : public FadeItemDelegate
 {
 public:
     FadableItemComposite(FadeItemDelegate *delegate);
+    ~FadableItemComposite();
     void DrawAlpha(QPainter *painter) const { m_fadeItemDelegate->DrawAlpha(painter); }
 private:
     FadeItemDelegate *m_fadeItemDelegate;
@@ -15,6 +16,12 @@ private:
 
 inline FadableItemComposite::FadableItemComposite(FadeItemDelegate *delegate) : m_fadeItemDelegate(delegate)
 {
+}
+
+
+inline FadableItemComposite::~FadableItemComposite()
+{
+    delete m_fadeItemDelegate;
 }
 
 #endif // FADABLEITEMCOMPOSITE_H

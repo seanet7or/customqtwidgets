@@ -12,7 +12,9 @@ class MouseHoverable : public QObject, public MouseHoverDelegate
     Q_OBJECT
 public:
     explicit MouseHoverable(QWidget *composite);
+    ~MouseHoverable();
     void DrawMouseHoverRect(QPainter &painter) const;
+    void setMouseHoverColor(QColor color);
 
 signals:
 
@@ -28,7 +30,7 @@ private:
     QColor m_mouseOverColor;
     qreal m_alpha;
     QTime m_lastMouseEvent;
-    QTimer *m_animTimer;
+    QTimer m_animTimer;
     QWidget *m_composite;
     bool m_hovered;
 };

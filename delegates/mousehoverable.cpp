@@ -1,13 +1,13 @@
 #include "mousehoverable.h"
 #include <qglobal.h>
 #include <qplatformdefs.h>
-#include <qsystemdetection.h>#include <QWidget>
+#include <qsystemdetection.h>
+#include <QWidget>
 #include <QEvent>
 #include <QDebug>
 #include <QTouchEvent>
 #include "../widgets.h"
 #include "../Animator.h"
-#include "mainwindow.h"
 
 
 MouseHoverable::MouseHoverable(QWidget *composite) :
@@ -21,12 +21,17 @@ MouseHoverable::MouseHoverable(QWidget *composite) :
     m_mouseOverColor = QColor(UI_MOUSEOVERCOLOR);
     m_alpha = 0.0;
     m_lastMouseEvent = QTime::currentTime();
-    m_animTimer = new QTimer();
-    m_animTimer->setSingleShot(true);
-    connect(m_animTimer, SIGNAL(timeout()), this, SLOT(RecalculateAlpha()));
+    m_animTimer.setSingleShot(true);
+    connect(&m_animTimer, SIGNAL(timeout()), this, SLOT(RecalculateAlpha()));
     m_composite = composite;
     m_composite->installEventFilter(this);
     connect(m_composite, SIGNAL(destroyed(QObject*)), Animator::Instance(), SLOT(OnObjectDestroyed(QObject*)));
+}
+
+
+MouseHoverable::~MouseHoverable()
+{
+
 }
 
 
@@ -47,7 +52,7 @@ void MouseHoverable::RecalculateAlpha()
         m_alpha /= (qreal)(UI_MOUSEOVERDURATION);
         if (!m_composite->underMouse())
             m_alpha = 1.0 - m_alpha;
-        m_animTimer->start(UI_FRAMETIME / 2);
+        m_animTimer.start(UI_FRAMETIME / 2);
         Animator::UpdateNextFrame(m_composite);
     }
     else
@@ -85,7 +90,7 @@ bool MouseHoverable::eventFilter(QObject *o, QEvent *e)
         }
         else
             m_lastMouseEvent = QTime::currentTime();
-        m_animTimer->start(UI_FRAMETIME / 2);
+        m_animTimer.start(UI_FRAMETIME / 2);
     }
     return false;
 
@@ -151,7 +156,13 @@ bool MouseHoverable::eventFilter(QObject *o, QEvent *e)
         }
         else
             m_lastMouseEvent = QTime::currentTime();
-        m_animTimer->start(UI_FRAMETIME / 2);
+        m_animTimer.start(UI_FRAMETIME / 2);
     }
     return false;
+}
+
+
+void MouseHoverable::setMouseHoverColor(QColor color)
+{
+    m_mouseOverColor = color;
 }

@@ -14,7 +14,7 @@ const QFont &WidgetSettings::helpTextFont()
     if (!init)
     {
         init = true;
-        font.setPointSize(11);
+        font.setPointSize(defaultFontSize());
         font.setWeight(QFont::DemiBold);
         font.setStyle(QFont::StyleOblique);
     }
@@ -29,7 +29,7 @@ const QFont &WidgetSettings::heading3Font()
     if (!init)
     {
         init = true;
-        font.setPointSize(15);
+        font.setPointSize(defaultFontSize() + 4);
         font.setStyle(QFont::StyleNormal);
         font.setCapitalization(QFont::Capitalize);
     }
@@ -50,7 +50,7 @@ const QFont &WidgetSettings::buttonFont()
     if (!init)
     {
         init = true;
-        font.setPointSize(11);
+        font.setPointSize(defaultFontSize());
         font.setWeight(QFont::Bold);
         font.setStyle(QFont::StyleNormal);
         font.setCapitalization(QFont::AllUppercase);
@@ -82,13 +82,13 @@ int WidgetSettings::pushButtonTopBottomMargins()
 }
 
 
-int WidgetSettings::pushButtonIconLeftRightMargins()
+int WidgetSettings::pushButtonIconTopBottomMargins()
 {
     return 2;
 }
 
 
-int WidgetSettings::pushButtonIconTopBottomMargins()
+int WidgetSettings::pushButtonIconLeftRightMargins()
 {
     return 2;
 }
@@ -117,13 +117,50 @@ QLabel *WidgetSettings::newHeading3Label()
 }
 
 
-int WidgetSettings::iconButtonTopLeftMargins()
+int WidgetSettings::iconButtonMargins()
 {
-    return iconButtonLeftRightMargins();
+    return 2;
 }
 
 
-int WidgetSettings::iconButtonLeftRightMargins()
+QSize WidgetSettings::minimalIconSize()
 {
-    return 2;
+    return QSize(16, 16);
+}
+
+
+QColor WidgetSettings::iconButtonMouseOverColor()
+{
+    return QColor(255, 255, 255, 128);
+}
+
+
+QSharedPointer<QLabel> WidgetSettings::newTextLabel(QWidget *p)
+{
+    QSharedPointer<QLabel> label = QSharedPointer<QLabel>(new QLabel(p));
+    label->setFont(textFont());
+    label->setContentsMargins(8, 6, 8, 6);
+    label->setWordWrap(false);
+    label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    return label;
+}
+
+
+const QFont &WidgetSettings::textFont()
+{
+    static bool init = false;
+    static QFont font;
+    if (!init)
+    {
+        init = true;
+        font.setPointSize(defaultFontSize());
+        font.setWeight(QFont::DemiBold);
+    }
+    return font;
+}
+
+
+int WidgetSettings::defaultFontSize()
+{
+    return 10;
 }

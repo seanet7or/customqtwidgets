@@ -14,16 +14,20 @@ public:
     /**
      * Fonts
      */
+    static int defaultFontSize();
     static const QFont &buttonFont();
     static const QFont &helpTextFont();
     // "lowest" heading group we have
     static const QFont &heading3Font();
+    static const QFont &textFont();
 
     /**
      * Icons
      */
-    // minimal Icon size
+    // standard Icon size
     static QSize iconSize();
+    // minimal icon icon size (eg for IconButtons)
+    static QSize minimalIconSize();
 
     /**
      * Margins
@@ -35,14 +39,19 @@ public:
     static int pushButtonTextLeftRightMargins();
     static int pushButtonTextTopBottomMargins();
 
-    static int iconButtonTopLeftMargins();
-    static int iconButtonLeftRightMargins();
+    static int iconButtonMargins();
 
     /**
      * Widgets
      */
     static QLabel *newHelpLabel();
     static QLabel *newHeading3Label();
+    static QSharedPointer<QLabel> newTextLabel(QWidget *p);
+
+    /**
+     * Colors
+     */
+    static QColor iconButtonMouseOverColor();
 };
 
 #endif // APPLICATIONCONSTANTS_H

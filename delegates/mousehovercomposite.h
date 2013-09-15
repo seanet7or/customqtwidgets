@@ -7,7 +7,9 @@ class MouseHoverComposite : public MouseHoverDelegate
 {
 public:
     MouseHoverComposite(MouseHoverDelegate *delegate);
+    ~MouseHoverComposite() { delete m_mouseHoverDelegate; }
     void DrawMouseHoverRect(QPainter &painter) const { m_mouseHoverDelegate->DrawMouseHoverRect(painter); }
+    void setMouseHoverColor(QColor color) { m_mouseHoverDelegate->setMouseHoverColor(color); }
 private:
     MouseHoverDelegate *m_mouseHoverDelegate;
 };
