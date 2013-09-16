@@ -4,8 +4,9 @@
 #include "delegates/mousehovercomposite.h"
 #include <QWidget>
 #include <QSvgRenderer>
+#include <QPushButton>
 
-class IconButton : public QWidget, FadableItemComposite, MouseHoverComposite
+class IconButton : public QPushButton, FadableItemComposite, MouseHoverComposite
 {
     Q_OBJECT
 public:

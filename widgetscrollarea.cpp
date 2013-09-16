@@ -10,12 +10,15 @@
 WidgetScrollArea::WidgetScrollArea(const QString &caption,
                                    const QString hint,
                                    QWidget *parent) :
-    QScrollArea(parent),
+    QWidget(parent),
     m_helpLabel(WidgetSettings::newHelpLabel()),
-    m_buttonLayout(new QHBoxLayout())
+    m_buttonLayout(new QVBoxLayout()),
+    m_scrollArea(new QScrollArea())
 {
     m_helpLabel->setText(hint);
     m_centralWidget = new QWidget(this);
+    QVBoxLayout *totalLayout = new QVBoxLayout(this);
+    totalLayout->setContentsMargins(0, 0, 0, 0);
     QVBoxLayout *centralLayout = new QVBoxLayout(m_centralWidget);
     m_centralWidget->setLayout(centralLayout);
     centralLayout->setContentsMargins(UI_LIST_LEFTMARGIN,
@@ -32,13 +35,17 @@ WidgetScrollArea::WidgetScrollArea(const QString &caption,
     m_heading = WidgetSettings::newHeading3Label();
     m_heading->setText(caption);
 
-    centralLayout->addWidget(m_heading);
-    centralLayout->addLayout(m_buttonLayout);
-    this->setWidget(m_centralWidget);
-    this->setWidgetResizable(true);
-    this->setFrameRect(QRect(0, 0, 0, 0));
-    this->setFrameShape(QFrame::NoFrame);
-    append(m_helpLabel);
+    totalLayout->addWidget(m_heading);
+    m_buttonLayout->addWidget(m_helpLabel);
+    QHBoxLayout *sideBySide = new QHBoxLayout();
+    sideBySide->addWidget(m_scrollArea);
+    sideBySide->addLayout(m_buttonLayout);
+    totalLayout->addLayout(sideBySide);
+    m_scrollArea->setWidget(m_centralWidget);
+    m_scrollArea->setWidgetResizable(true);
+    m_scrollArea->setFrameRect(QRect(0, 0, 0, 0));
+    m_scrollArea->setFrameShape(QFrame::NoFrame);
+    this->setLayout(totalLayout);
 }
 
 
@@ -50,6 +57,7 @@ void WidgetScrollArea::append(QWidget *w)
 
 void WidgetScrollArea::addButton(QWidget *b)
 {
+    m_buttonLayout->removeWidget(m_helpLabel);
     for (int i = 0; i < m_buttonLayout->count(); i++)
     {
         QSpacerItem *si = m_buttonLayout->itemAt(i)->spacerItem();
@@ -60,11 +68,24 @@ void WidgetScrollArea::addButton(QWidget *b)
             i--;
         }
     }
-    m_buttonLayout->insertItem(0, new QSpacerItem(0, 10,
+    /*m_buttonLayout->insertItem(0, new QSpacerItem(0, 10,
                                                   QSizePolicy::Expanding,
-                                                  QSizePolicy::Ignored));
+                                                  QSizePolicy::Ignored));*/
     m_buttonLayout->addWidget(b);
-    m_buttonLayout->addSpacerItem(new QSpacerItem(0, 10,
-                                                  QSizePolicy::Expanding,
-                                                  QSizePolicy::Ignored));
+    m_buttonLayout->addWidget(m_helpLabel);
+    m_buttonLayout->addSpacerItem(new QSpacerItem(0, 0,
+                                                  QSizePolicy::Maximum,
+                                                  QSizePolicy::Expanding));
+}
+
+
+void WidgetScrollArea::enterEvent(QEvent *e)
+{
+
+}
+
+
+void WidgetScrollArea::leaveEvent(QEvent *e)
+{
+
 }

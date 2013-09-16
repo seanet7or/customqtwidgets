@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
-class WidgetScrollArea : public QScrollArea
+class WidgetScrollArea : public QWidget
 {
     Q_OBJECT
 public:
@@ -17,11 +17,16 @@ signals:
     
 public slots:
 
+protected:
+    virtual void enterEvent(QEvent *e);
+    virtual void leaveEvent(QEvent *);
+
 private:
     QLabel *m_heading;
     QLabel *m_helpLabel;
     QWidget *m_centralWidget;
-    QHBoxLayout *m_buttonLayout;
+    QVBoxLayout *m_buttonLayout;
+    QScrollArea *m_scrollArea;
 };
 
 #endif // WIDGETSCROLLAREA_H

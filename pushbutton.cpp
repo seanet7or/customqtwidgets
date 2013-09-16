@@ -96,8 +96,8 @@ void PushButton::RecalcSize()
                    + WidgetSettings::pushButtonTextTopBottomMargins() * 2
                    + WidgetSettings::pushButtonTopBottomMargins() * 2);
     setMinimumSize(m_size);
-    QSize maxSize(m_size.width() * 0.8, m_size.height() * 0.8);
-    setMaximumSize(maxSize);
+    //QSize maxSize(m_size.width() * 0.8, m_size.height() * 0.8);
+    //setMaximumSize(maxSize);
 }
 
 
