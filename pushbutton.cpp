@@ -7,10 +7,9 @@
 #include "delegates/mousehoverable.h"
 
 
-PushButton::PushButton(QWidget *fader, QWidget *parent) :
+PushButton::PushButton(QWidget *parent) :
     QPushButton(parent),
     MouseHoverComposite(new MouseHoverable(this)),
-    FadableItemComposite(new FadableItem(this, fader)),
     m_icon()
 {
     setFont(WidgetSettings::buttonFont());
@@ -27,7 +26,6 @@ void PushButton::paintEvent(QPaintEvent *e)
                            | QPainter::SmoothPixmapTransform,
                            true);
     DrawMouseHoverRect(painter);
-    FadableItemComposite::DrawAlpha(&painter);
     painter.setPen(QPen(QColor(132, 132, 132)));
     int xMargin = WidgetSettings::pushButtonLeftRightMargins();
     int yMargin = WidgetSettings::pushButtonTopBottomMargins();

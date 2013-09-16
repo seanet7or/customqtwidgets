@@ -8,7 +8,7 @@
 
 
 TabButtonWidget::TabButtonWidget(TabWidget *parent) :
-    PushButton(parent, parent),
+    PushButton(parent),
     m_minSize(size()),
     m_tabWidget(parent)
 {

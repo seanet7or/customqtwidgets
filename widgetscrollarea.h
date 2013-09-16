@@ -12,7 +12,7 @@ class WidgetScrollArea : public QScrollArea
 public:
     explicit WidgetScrollArea(const QString &caption, const QString hint, QWidget *parent = 0);
     virtual void append(QWidget *w);
-    void addButton(QWidget *b);
+    void addButton(QWidget* b);
 signals:
     
 public slots:

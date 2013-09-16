@@ -7,11 +7,11 @@
 #include "delegates/fadableitemcomposite.h"
 
 
-class PushButton : public QPushButton, protected MouseHoverComposite, protected FadableItemComposite
+class PushButton : public QPushButton, protected MouseHoverComposite
 {
     Q_OBJECT
 public:
-    PushButton(QWidget *fader, QWidget *parent);
+    PushButton(QWidget *parent);
     virtual void setSVG(const QString &name);
     virtual void setPixmap(QPixmap p);
     virtual void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
