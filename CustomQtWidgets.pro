@@ -15,7 +15,8 @@ SOURCES += widgetscrollarea.cpp \
     widgettools.cpp \
 	widgetsettings.cpp \
     ../CustomQtWidgets/delegates/fadableitem.cpp \
-    ../CustomQtWidgets/IconButton.cpp
+    ../CustomQtWidgets/IconButton.cpp \
+    ../CustomQtWidgets/checkbutton.cpp
 
 HEADERS  += ../CustomQtWidgets/widgetscrollarea.h \
 	../CustomQtWidgets/widgets.h \
@@ -32,4 +33,8 @@ HEADERS  += ../CustomQtWidgets/widgetscrollarea.h \
     ../CustomQtWidgets/delegates/fadeitemdelegate.h \
     ../CustomQtWidgets/delegates/fadableitem.h \
     ../CustomQtWidgets/delegates/fadableitemcomposite.h \
-    ../CustomQtWidgets/iconbutton.h
+    ../CustomQtWidgets/iconbutton.h \
+    ../CustomQtWidgets/checkbutton.h
+
+RESOURCES += \
+    ../CustomQtWidgets/icons.qrc

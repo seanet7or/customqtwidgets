@@ -31,6 +31,9 @@ protected:
     virtual void paintEvent(QPaintEvent *);
     virtual void resizeEvent(QResizeEvent *);
 
+protected:
+    QSvgRenderer m_svgRenderer;
+
 private:
     Q_DISABLE_COPY(PushButton)
     void RecalcSize();
@@ -40,7 +43,6 @@ private:
     QSize m_textSize;
     QSize m_iconSize;
     QSize m_size;
-    QSvgRenderer m_svgRenderer;
 };
 
 #endif // PUSHBUTTON_H
