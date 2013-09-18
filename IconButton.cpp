@@ -6,7 +6,7 @@
 
 
 IconButton::IconButton(QWidget *fader) :
-    FadableItemComposite(new FadableItem(this, fader)),
+    FadableItemComposite(this, fader),
     MouseHoverComposite(new MouseHoverable(this))
 {
     setMouseHoverColor(WidgetSettings::iconButtonMouseOverColor());
@@ -36,7 +36,6 @@ void IconButton::paintEvent(QPaintEvent *)
                  m_size.width() - WidgetSettings::iconButtonMargins() * 2,
                  m_size.height() - WidgetSettings::iconButtonMargins() * 2);
     QPainter painter(this);
-    DrawAlpha(&painter);
     DrawMouseHoverRect(painter);
     m_svgRenderer.render(&painter, target);
 }

@@ -13,7 +13,8 @@
 FadableItem::FadableItem(QWidget *composite, QWidget *fader) :
     QObject(composite),
     m_visible(false),
-    m_fader(fader)
+    m_fader(fader),
+    m_effect(new QGraphicsOpacityEffect(this))
 {
     fader->setMouseTracking(true);
     m_alpha = 0.0;
@@ -24,12 +25,8 @@ FadableItem::FadableItem(QWidget *composite, QWidget *fader) :
     m_composite = composite;
     fader->installEventFilter(this);
     connect(m_composite, SIGNAL(destroyed(QObject*)), Animator::Instance(), SLOT(OnObjectDestroyed(QObject*)));
-}
-
-
-void FadableItem::DrawAlpha(QPainter *painter) const
-{
-    painter->setOpacity(m_alpha);
+    m_composite->setGraphicsEffect(m_effect);
+    m_effect->setOpacity(m_alpha);
 }
 
 
@@ -42,6 +39,7 @@ void FadableItem::FadableItemRecalculateAlpha()
         if (!m_visible)
             m_alpha = 1.0 - m_alpha;
         m_animTimer->start(UI_FRAMETIME / 2);
+        m_effect->setOpacity(m_alpha);
         Animator::UpdateNextFrame(m_composite);
     }
     else
@@ -50,6 +48,7 @@ void FadableItem::FadableItemRecalculateAlpha()
             m_alpha = 0.0;
         else
             m_alpha = 1.0;
+        m_effect->setOpacity(m_alpha);
         Animator::UpdateNextFrame(m_composite);
     }
 }

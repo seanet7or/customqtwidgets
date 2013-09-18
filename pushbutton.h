@@ -7,7 +7,7 @@
 #include "delegates/fadableitemcomposite.h"
 
 
-class PushButton : public QPushButton, protected MouseHoverComposite
+class PushButton : public QPushButton, public MouseHoverComposite
 {
     Q_OBJECT
 public:

@@ -7,7 +7,6 @@
 class FadeItemDelegate
 {
 public:
-    virtual void DrawAlpha(QPainter *p) const = 0;
     virtual ~FadeItemDelegate() {}
 };
 

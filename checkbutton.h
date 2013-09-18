@@ -4,9 +4,10 @@
 #include <QCheckBox>
 #include <QSvgRenderer>
 #include "pushbutton.h"
+#include "delegates/fadableitemcomposite.h"
 
 
-class CheckButton : public PushButton
+class CheckButton : public PushButton, public FadableItemComposite
 {
     Q_OBJECT
 public:
@@ -19,9 +20,10 @@ public slots:
 protected:
     virtual void setSVG(const QString &name);
 
+private slots:
+    void onToggled(bool checked);
+
 private:
-    QSvgRenderer m_checkedSvg;
-    QSvgRenderer m_uncheckedSvg;
 };
 
 #endif // CHECKBUTTON_H

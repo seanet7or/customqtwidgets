@@ -154,7 +154,7 @@ const QFont &WidgetSettings::textFont()
     if (!init)
     {
         init = true;
-        font.setPointSize(defaultFontSize());
+        font.setPointSize(defaultFontSize() + 1);
         font.setWeight(QFont::Normal);
     }
     return font;

@@ -2,19 +2,20 @@
 #define FADABLEITEMCOMPOSITE_H
 
 #include "fadeitemdelegate.h"
+#include "fadableitem.h"
 
 class FadableItemComposite : public FadeItemDelegate
 {
 public:
-    FadableItemComposite(FadeItemDelegate *delegate);
+    FadableItemComposite(QWidget *composite, QWidget *fader);
     ~FadableItemComposite();
-    void DrawAlpha(QPainter *painter) const { m_fadeItemDelegate->DrawAlpha(painter); }
 private:
     FadeItemDelegate *m_fadeItemDelegate;
 };
 
 
-inline FadableItemComposite::FadableItemComposite(FadeItemDelegate *delegate) : m_fadeItemDelegate(delegate)
+inline FadableItemComposite::FadableItemComposite(QWidget *composite, QWidget *fader)
+    : m_fadeItemDelegate(new FadableItem(composite, fader))
 {
 }
 

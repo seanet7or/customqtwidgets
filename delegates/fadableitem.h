@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTime>
 #include <QTimer>
+#include <QGraphicsOpacityEffect>
 #include "fadeitemdelegate.h"
 
 
@@ -12,7 +13,6 @@ class FadableItem : public QObject, public FadeItemDelegate
     Q_OBJECT
 public:
     explicit FadableItem(QWidget *composite, QWidget *fader);
-    void DrawAlpha(QPainter *painter) const;
 
 signals:
 
@@ -30,6 +30,7 @@ private:
     QTimer *m_animTimer;
     QWidget *m_composite;
     QWidget *m_fader;
+    QGraphicsOpacityEffect *m_effect;
     bool m_visible;
 };
 
