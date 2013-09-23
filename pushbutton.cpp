@@ -77,24 +77,38 @@ void PushButton::RecalcSize()
 {
     QRect textRect(0, 0, 0, 0);
     m_textSize = QSize(0, 0);
-    if (text().length())
-    {
-        textRect = this->fontMetrics().boundingRect(0, 0, QWIDGETSIZE_MAX, QWIDGETSIZE_MAX,
+
+    textRect = this->fontMetrics().boundingRect(0, 0, QWIDGETSIZE_MAX, QWIDGETSIZE_MAX,
                                                       Qt::AlignCenter, text());
-        textRect.setWidth(textRect.width() + fontMetrics().averageCharWidth() * 2);
-        textRect.setHeight(fontMetrics().lineSpacing());
-        m_textSize = textRect.size();
+    textRect.setWidth(textRect.width() + fontMetrics().averageCharWidth() * 2);
+    if (!text().length())
+    {
+        textRect.setWidth(0);
     }
+    textRect.setHeight(fontMetrics().lineSpacing());
+    m_textSize = textRect.size();
+
     int iconLength = m_textSize.height()
             + 2 * WidgetSettings::pushButtonTextTopBottomMargins()
             - 2 * WidgetSettings::pushButtonIconTopBottomMargins();
     m_iconSize = QSize(iconLength, iconLength);
-    m_size = QSize(m_textSize.width() + 2 * WidgetSettings::pushButtonTextLeftRightMargins()
+    if (!text().length())
+    {
+        m_size = QSize(m_iconSize.width() + 2 * WidgetSettings::pushButtonIconLeftRightMargins()
+                   + (contentsMargins().left() + contentsMargins().right()),
+                   textRect.height()
+                   + WidgetSettings::pushButtonTextTopBottomMargins() * 2
+                   + (contentsMargins().top() + contentsMargins().bottom()));
+    }
+    else
+    {
+        m_size = QSize(m_textSize.width() + 2 * WidgetSettings::pushButtonTextLeftRightMargins()
                    + m_iconSize.width() + 2 * WidgetSettings::pushButtonIconLeftRightMargins()
                    + (contentsMargins().left() + contentsMargins().right()),
                    textRect.height()
                    + WidgetSettings::pushButtonTextTopBottomMargins() * 2
                    + (contentsMargins().top() + contentsMargins().bottom()));
+    }
     setMinimumSize(m_size);
     //QSize maxSize(m_size.width() * 0.8, m_size.height() * 0.8);
     //setMaximumSize(maxSize);
