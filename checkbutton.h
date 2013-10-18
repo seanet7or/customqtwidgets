@@ -7,11 +7,11 @@
 #include "delegates/fadableitemcomposite.h"
 
 
-class CheckButton : public PushButton, public FadableItemComposite
+class CheckButton : public PushButton
 {
     Q_OBJECT
 public:
-    explicit CheckButton(QWidget *parent = 0);
+    explicit CheckButton(QWidget *parent = 0, QWidget *fader = NULL);
 
 signals:
 

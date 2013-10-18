@@ -36,11 +36,12 @@ WidgetScrollArea::WidgetScrollArea(const QString &caption,
     m_heading->setText(caption);
 
     totalLayout->addWidget(m_heading);
-    m_buttonLayout->addWidget(m_helpLabel);
+    //m_buttonLayout->addWidget(m_helpLabel);
     QHBoxLayout *sideBySide = new QHBoxLayout();
     sideBySide->addWidget(m_scrollArea);
     sideBySide->addLayout(m_buttonLayout);
     totalLayout->addLayout(sideBySide);
+    totalLayout->addWidget(m_helpLabel);
     m_scrollArea->setWidget(m_centralWidget);
     m_scrollArea->setWidgetResizable(true);
     m_scrollArea->setFrameRect(QRect(0, 0, 0, 0));
@@ -57,7 +58,6 @@ void WidgetScrollArea::append(QWidget *w)
 
 void WidgetScrollArea::addButton(QWidget *b)
 {
-    m_buttonLayout->removeWidget(m_helpLabel);
     for (int i = 0; i < m_buttonLayout->count(); i++)
     {
         QSpacerItem *si = m_buttonLayout->itemAt(i)->spacerItem();
@@ -72,7 +72,6 @@ void WidgetScrollArea::addButton(QWidget *b)
                                                   QSizePolicy::Expanding,
                                                   QSizePolicy::Ignored));*/
     m_buttonLayout->addWidget(b);
-    m_buttonLayout->addWidget(m_helpLabel);
     m_buttonLayout->addSpacerItem(new QSpacerItem(0, 0,
                                                   QSizePolicy::Maximum,
                                                   QSizePolicy::Expanding));

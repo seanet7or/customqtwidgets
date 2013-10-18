@@ -6,7 +6,7 @@
 #include <QSvgRenderer>
 #include <QPushButton>
 
-class IconButton : public QPushButton, FadableItemComposite, MouseHoverComposite
+class IconButton : public QPushButton, MouseHoverComposite
 {
     Q_OBJECT
 public:

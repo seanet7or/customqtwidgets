@@ -28,10 +28,10 @@ private:
     qreal m_alpha;
     QTime m_lastMouseEvent;
     QTimer *m_animTimer;
+    bool m_visible;
     QWidget *m_composite;
     QWidget *m_fader;
     QGraphicsOpacityEffect *m_effect;
-    bool m_visible;
 };
 
 #endif // MOUSEHOVERABLE_H

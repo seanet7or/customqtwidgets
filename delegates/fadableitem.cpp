@@ -14,19 +14,22 @@ FadableItem::FadableItem(QWidget *composite, QWidget *fader) :
     QObject(composite),
     m_visible(false),
     m_fader(fader),
+    m_composite(composite),
     m_effect(new QGraphicsOpacityEffect(this))
 {
-    fader->setMouseTracking(true);
-    m_alpha = 0.0;
+    if (fader)
+    {
+        fader->setMouseTracking(true);
+        fader->installEventFilter(this);
+        m_alpha = 0.0;
+        m_composite->setGraphicsEffect(m_effect);
+        m_effect->setOpacity(m_alpha);
+    }
     m_lastMouseEvent = QTime::currentTime().addMSecs( - 2 * UI_MOUSEOVERDURATION);
     m_animTimer = new QTimer();
     m_animTimer->setSingleShot(true);
     connect(m_animTimer, SIGNAL(timeout()), this, SLOT(FadableItemRecalculateAlpha()));
-    m_composite = composite;
-    fader->installEventFilter(this);
     connect(m_composite, SIGNAL(destroyed(QObject*)), Animator::Instance(), SLOT(OnObjectDestroyed(QObject*)));
-    m_composite->setGraphicsEffect(m_effect);
-    m_effect->setOpacity(m_alpha);
 }
 
 

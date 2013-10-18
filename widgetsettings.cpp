@@ -52,7 +52,7 @@ const QFont &WidgetSettings::buttonFont()
     {
         init = true;
         font.setPointSize(defaultFontSize());
-        font.setWeight(QFont::DemiBold);
+        font.setWeight(QFont::Normal);
         font.setStyle(QFont::StyleNormal);
         font.setCapitalization(QFont::AllUppercase);
     }
@@ -60,13 +60,14 @@ const QFont &WidgetSettings::buttonFont()
 }
 
 
-QLabel *WidgetSettings::newHelpLabel()
+QLabel *WidgetSettings::newHelpLabel(const QString &text)
 {
     QLabel *label = new QLabel;
     label->setFont(helpTextFont());
     label->setContentsMargins(8, 6, 8, 6);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignCenter);
+    label->setText(text);
     return label;
 }
 
@@ -163,5 +164,5 @@ const QFont &WidgetSettings::textFont()
 
 int WidgetSettings::defaultFontSize()
 {
-    return 9;
+    return 10;
 }

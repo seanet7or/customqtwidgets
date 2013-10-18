@@ -44,7 +44,7 @@ public:
     /**
      * Widgets
      */
-    static QLabel *newHelpLabel();
+    static QLabel *newHelpLabel(const QString &text = QString());
     static QLabel *newHeading3Label();
     static QSharedPointer<QLabel> newTextLabel(QWidget *p);
 

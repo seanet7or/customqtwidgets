@@ -7,9 +7,10 @@
 #include "delegates/mousehoverable.h"
 
 
-PushButton::PushButton(QWidget *parent) :
+PushButton::PushButton(QWidget *parent, QWidget *fader) :
     QPushButton(parent),
     MouseHoverComposite(new MouseHoverable(this)),
+    FadableItemComposite(this, fader),
     m_icon()
 {
     setFont(WidgetSettings::buttonFont());
@@ -36,28 +37,36 @@ void PushButton::paintEvent(QPaintEvent *e)
                      rect().width() - (contentsMargins().left() + contentsMargins().left()),
                      rect().height() - (contentsMargins().top() + contentsMargins().bottom()));
     int xIconMargin = WidgetSettings::pushButtonIconLeftRightMargins();
-    int xTextMargin = WidgetSettings::pushButtonTextLeftRightMargins();
 
-    int freeXSpace = rect().width() - m_textSize.width() - m_iconSize.width()
-            - (contentsMargins().left() + contentsMargins().left()) - 2 * xIconMargin - 2 * xTextMargin;
-    QRect target(contentsMargins().left() + xIconMargin + (freeXSpace * 3) / 8,
-                 (rect().height() - m_iconSize.height()) / 2,
-                 m_iconSize.width(),
-                 m_iconSize.height());
-    if (m_svgRenderer.isValid())
+    if (m_svgRenderer.isValid() && (!text().length()))
     {
+        QRect target((rect().width() -  m_iconSize.width()) / 2,
+                     (rect().height() - m_iconSize.height()) / 2,
+                     m_iconSize.width(),
+                     m_iconSize.height());
         m_svgRenderer.render(&painter, target);
     }
-    painter.setFont(font());
-    painter.setPen(QPen(QColor(0, 0, 0)));
+    else if (m_svgRenderer.isValid() && (text().length()))
+    {
+        int xTextMargin = WidgetSettings::pushButtonTextLeftRightMargins();
+        int freeXSpace = rect().width() - m_textSize.width() - m_iconSize.width()
+                - (contentsMargins().left() + contentsMargins().left()) - 2 * xIconMargin - 2 * xTextMargin;
+        QRect target(contentsMargins().left() + xIconMargin + (freeXSpace * 3) / 8,
+                     (rect().height() - m_iconSize.height()) / 2,
+                     m_iconSize.width(),
+                     m_iconSize.height());
+        m_svgRenderer.render(&painter, target);
+        painter.setFont(font());
+        painter.setPen(QPen(QColor(0, 0, 0)));
 
-    painter.drawText(target.x() + xIconMargin + m_iconSize.width()
-                     + (freeXSpace * 2) / 8 + xTextMargin,
-                     0,
-                     m_textSize.width(),
-                     rect().height(),
-                     Qt::AlignCenter | Qt::TextWordWrap,
-                     text());
+        painter.drawText(target.x() + xIconMargin + m_iconSize.width()
+                         + (freeXSpace * 2) / 8 + xTextMargin,
+                         0,
+                         m_textSize.width(),
+                         rect().height(),
+                         Qt::AlignCenter | Qt::TextWordWrap,
+                         text());
+    }
 }
 
 

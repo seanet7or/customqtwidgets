@@ -6,7 +6,6 @@
 
 
 IconButton::IconButton(QWidget *fader) :
-    FadableItemComposite(this, fader),
     MouseHoverComposite(new MouseHoverable(this))
 {
     setMouseHoverColor(WidgetSettings::iconButtonMouseOverColor());

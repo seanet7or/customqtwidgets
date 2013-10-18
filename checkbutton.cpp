@@ -1,9 +1,8 @@
 #include "checkbutton.h"
 
 
-CheckButton::CheckButton(QWidget *parent) :
-    PushButton(parent),
-    FadableItemComposite(this, parent)
+CheckButton::CheckButton(QWidget *parent, QWidget *fader) :
+    PushButton(parent, fader)
 {
     setCheckable(true);
     setChecked(true);
